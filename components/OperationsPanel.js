@@ -1,67 +1,125 @@
-import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
-import CButton from "../buttons/CButton";
+import React, { useRef, useState } from "react";
+import {
+  View,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Image,
+  Animated,
+} from "react-native";
 
 export default function OperationsPanel() {
-  const [opacity, setOpacity] = useState(1);
-  const cButton = require("../assets/CButton.png");
-  return (
-    <View style={styles.buttonsView}>
-      {/* <TouchableHighlight style={styles.buttonTools}>
-        <BlurView style={styles.blurView} intensity={50} tint="light">
-          <LinearGradient
-            colors={["rgba(255, 255, 255, 0.5)", "transparent"]}
-            style={styles.innerShadow}
-          >
-            <Text style={styles.text}>C</Text>
-          </LinearGradient>
-        </BlurView>
-      </TouchableHighlight>*/}
-      <TouchableOpacity
-        activeOpacity={0.5} // Cambia esto según el efecto deseado
-        onPressIn={() => setOpacity(0.5)}
-        onPressOut={() => setOpacity(1)}
-      >
-        <Image
-          source={cButton}
-          style={{ opacity, width: 78, height: 78 }} // Ajusta el tamaño según sea necesario
-        />
-      </TouchableOpacity>
-    </View>
-  );
-}
+  const [pressedButtonId, setPressedButtonId] = useState(null);
+  const operationButtons = [
+    {
+      id: "cButton",
+      image: require("../assets/CButton.png"),
+      animValue: new Animated.Value(1),
+    },
+    {
+      id: "percButton",
+      image: require("../assets/PercentageButton.png"),
+      animValue: new Animated.Value(1),
+    },
+    {
+      id: "suprButton",
+      image: require("../assets/SuprButton.png"),
+      animValue: new Animated.Value(1),
+    },
+    {
+      id: "divButton",
+      image: require("../assets/DivButton.png"),
+      animValue: new Animated.Value(1),
+    },
+    {
+      id: "multButton",
+      image: require("../assets/MultButton.png"),
+      animValue: new Animated.Value(1),
+    },
+    {
+      id: "minusButton",
+      image: require("../assets/MinusButton.png"),
+      animValue: new Animated.Value(1),
+    },
+    {
+      id: "plusButton",
+      image: require("../assets/PlusButton.png"),
+      animValue: new Animated.Value(1),
+    },
+    {
+      id: "equalButton",
+      image: require("../assets/EqualButton.png"),
+      animValue: new Animated.Value(1),
+    },
+  ];
 
+  const renderButtons = () =>
+    operationButtons.map((button) => {
+      const backgroundColor = button.animValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["rgba(161, 161, 161, 0.5)", "#F2F2F2"],
+      });
+
+      const onPressIn = () => {
+        Animated.timing(button.animValue, {
+          toValue: 0.3,
+          duration: 30,
+          useNativeDriver: false,
+        }).start();
+      };
+
+      const onPressOut = () => {
+        Animated.timing(button.animValue, {
+          toValue: 1,
+          duration: 150,
+          useNativeDriver: false,
+        }).start();
+      };
+
+      return (
+        <View key={button.id} style={styles.buttonShadow}>
+          <TouchableWithoutFeedback
+            onPressIn={onPressIn}
+            onPressOut={onPressOut}
+          >
+            <Animated.View style={[styles.button, { backgroundColor }]}>
+              <Image source={button.image} style={styles.buttonImage} />
+            </Animated.View>
+          </TouchableWithoutFeedback>
+        </View>
+      );
+    });
+
+  return <View style={styles.buttonsView}>{renderButtons()}</View>;
+}
 const styles = StyleSheet.create({
   buttonsView: {
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
   },
-  innerShadow: {
+  buttonShadow: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 35,
-  },
-  blurView: {
-    height: 70,
-    width: 70,
-    borderRadius: 35,
-    alignItems: "center",
-  },
-  buttonTools: {
-    height: 70,
-    width: 70,
-    borderRadius: 35,
-    textAlign: "center",
-    backgroundColor: "rgba(176, 176, 176, 0.21)",
-    shadowColor: "#000000",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.25,
-    shadowRadius: 4,
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 5,
-    overflow: "hidden",
+    shadowRadius: 4,    
+    marginBottom: 10, 
+    backgroundColor: "#FFFFFF", 
+    elevation: 5, // Solo para Android
+  },
+  button: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    overflow: "hidden", // Asegura que la imagen no se salga de los bordes circulares
+  },
+  buttonImage: {
+    width: "100%",
+    height: "100%",
   },
   text: {
     fontSize: 48,
