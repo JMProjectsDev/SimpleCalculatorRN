@@ -11,31 +11,31 @@ export default function ButtonsPanel() {
   const operationButtons = [
     {
       id: "cButton",
-      image: require("../assets/CButton.png"),
+      image: require("../assets/cButton.png"),
       animValue: new Animated.Value(1),
       scaleAnim: new Animated.Value(1),
     },
     {
       id: "percButton",
-      image: require("../assets/PercentageButton.png"),
+      image: require("../assets/percentageButton.png"),
       animValue: new Animated.Value(1),
       scaleAnim: new Animated.Value(1),
     },
     {
       id: "suprButton",
-      image: require("../assets/SuprButton.png"),
+      image: require("../assets/suprButton.png"),
       animValue: new Animated.Value(1),
       scaleAnim: new Animated.Value(1),
     },
     {
       id: "divButton",
-      image: require("../assets/DivButton.png"),
+      image: require("../assets/divButton.png"),
       animValue: new Animated.Value(1),
       scaleAnim: new Animated.Value(1),
     },
     {
       id: "_7Button",
-      image: require("../assets/_0Button.png"),
+      image: require("../assets/_7Button.png"),
       animValue: new Animated.Value(1),
       scaleAnim: new Animated.Value(1),
     },
@@ -53,7 +53,7 @@ export default function ButtonsPanel() {
     },
     {
       id: "multButton",
-      image: require("../assets/MultButton.png"),
+      image: require("../assets/multButton.png"),
       animValue: new Animated.Value(1),
       scaleAnim: new Animated.Value(1),
     },
@@ -77,7 +77,7 @@ export default function ButtonsPanel() {
     },
     {
       id: "minusButton",
-      image: require("../assets/MinusButton.png"),
+      image: require("../assets/minusButton.png"),
       animValue: new Animated.Value(1),
       scaleAnim: new Animated.Value(1),
     },
@@ -101,7 +101,7 @@ export default function ButtonsPanel() {
     },
     {
       id: "plusButton",
-      image: require("../assets/PlusButton.png"),
+      image: require("../assets/plusButton.png"),
       animValue: new Animated.Value(1),
       scaleAnim: new Animated.Value(1),
     },
@@ -119,13 +119,13 @@ export default function ButtonsPanel() {
     },
     {
       id: "DotButton",
-      image: require("../assets/DotButton.png"),
+      image: require("../assets/dotButton.png"),
       animValue: new Animated.Value(1),
       scaleAnim: new Animated.Value(1),
     },
     {
       id: "equalButton",
-      image: require("../assets/EqualButton.png"),
+      image: require("../assets/equalButton.png"),
       animValue: new Animated.Value(1),
       scaleAnim: new Animated.Value(1),
     },
@@ -142,7 +142,7 @@ export default function ButtonsPanel() {
 
         // Animacion de la escala
         Animated.timing(button.animValue, {
-          toValue: 0.3,
+          toValue: 0.2,
           duration: 20,
           useNativeDriver: true,
         }).start();
@@ -194,32 +194,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonShadow: {
-    width: 70,
-    height: 70,
-    margin: 8,
-    borderRadius: 35,
+    width: 75,
+    height: 75,
+    marginVertical: 8,
+    marginHorizontal: 5,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     marginBottom: 15,
-    backgroundColor: "#FFFFFF",
-    elevation: 5, // Solo para Android
-  },
-  button: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    overflow: "hidden", // Asegura que la imagen no se salga de los bordes circulares
   },
   buttonImage: {
     width: "100%",
     height: "100%",
-  },
-  text: {
-    fontSize: 48,
-    color: "#000",
   },
 });
