@@ -1,13 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import PanelResults from './components/ResultsPanel';
-import Operations from './components/OperationsPanel';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import ResultsPanel from "./components/ResultsPanel";
+import ButtonsPanel from "./components/ButtonsPanel";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <PanelResults />
-      <Operations />
+      <ResultsPanel />
+      <ButtonsPanel />
       <StatusBar style="auto" />
     </View>
   );
@@ -16,8 +16,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F2',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#F2F2F2",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
