@@ -7,8 +7,10 @@ export default function ResultsPanel() {
         source={require("../assets/resultsVisualizer.png")}
         style={styles.resultsVisualizer}
       />
-      <Text style={styles.digits}>5x2</Text>
-      <Text style={styles.result}>10</Text>
+      <View style={styles.operations}>
+        <Text style={styles.digits}>5x2</Text>
+        <Text style={styles.result}>10</Text>
+      </View>
     </View>
   );
 }
@@ -21,19 +23,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     height: "30%",
+    position: "relative",
   },
   resultsVisualizer: {
     width: "100%",
     height: "100%",
-    borderColor: "black",
-    objectFit: "contain",
+    resizeMode: "contain",
   },
-
+  operations: {
+    position: "absolute",
+    alignItems: "flex-end",
+    bottom: 30,
+    right: 20,
+    zIndex: 10,
+  },
   digits: {
     fontSize: 48,
     fontWeight: "700",
+    color: "#000",
   },
-
   result: {
     fontSize: 48,
     fontWeight: "700",
