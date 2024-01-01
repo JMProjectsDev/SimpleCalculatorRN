@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -150,38 +150,45 @@ export default function ButtonsPanel() {
       button: "=",
     },
   ];
+  const [pressedButton, setPressedButton] = useState([]);
 
   const renderButtons = () =>
     operationButtons.map((button) => {
       const onPressIn = () => {
-        // Animacion de la escala
-        Animated.spring(button.scaleAnim, {
-          toValue: 0.8,
-          useNativeDriver: true,
-        }).start();
-
-        // Animacion de la escala
-        Animated.timing(button.animValue, {
-          toValue: 0.2,
-          duration: 20,
-          useNativeDriver: true,
-        }).start();
-        console.log(button.button);
+        // Ejecutar ambas animaciones en paralelo
+        Animated.parallel([
+          Animated.spring(button.scaleAnim, {
+            toValue: 0.8,
+            useNativeDriver: true,
+          }),
+          Animated.timing(button.animValue, {
+            toValue: 0.2,
+            duration: 20,
+            useNativeDriver: true,
+          }),
+        ]).start(() => {
+          // Actualizar el estado después de que ambas animaciones terminen
+          setPressedButton((prevButtons) => [...prevButtons, button.button]);
+        });
       };
 
       const onPressOut = () => {
         // Vuelve la escala y la opacidad a la normalidad
-        Animated.spring(button.scaleAnim, {
-          toValue: 1,
-          friction: 3,
-          useNativeDriver: true,
-        }).start();
-        Animated.timing(button.animValue, {
-          toValue: 1,
-          duration: 200,
-          useNativeDriver: true,
-        }).start();
+        Animated.parallel([
+          Animated.spring(button.scaleAnim, {
+            toValue: 1,
+            friction: 3,
+            useNativeDriver: true,
+          }),
+          Animated.timing(button.animValue, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true,
+          }),
+        ]).start();
       };
+
+      //console.log(button.button); //renderiza todos
 
       return (
         <TouchableWithoutFeedback
@@ -203,6 +210,10 @@ export default function ButtonsPanel() {
         </TouchableWithoutFeedback>
       );
     });
+
+  useEffect(() => {
+    console.log(pressedButton);
+  }, [pressedButton]);
 
   return <View style={styles.buttonsView}>{renderButtons()}</View>;
 }
