@@ -1,6 +1,6 @@
 import { Text, View, Image, StyleSheet } from "react-native";
 
-export default function ResultsPanel() {
+export default function ResultsPanel({ input, result }) {
   return (
     <View style={styles.resultsView}>
       <Image
@@ -8,8 +8,8 @@ export default function ResultsPanel() {
         style={styles.resultsVisualizer}
       />
       <View style={styles.operations}>
-        <Text style={styles.digits}>5x2</Text>
-        <Text style={styles.result}>10</Text>
+        <Text style={styles.digits}>{input}</Text>
+        <Text style={styles.result}>{result}</Text>
       </View>
     </View>
   );
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   result: {
     fontSize: 48,
-    fontWeight: "700",
-    color: "#353535",
+    fontWeight: "500",
+    color: "#454545",
   },
 });
