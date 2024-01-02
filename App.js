@@ -3,9 +3,10 @@ import { StyleSheet, Text, View } from "react-native";
 import ResultsPanel from "./components/ResultsPanel";
 import ButtonsPanel from "./components/ButtonsPanel";
 import { useState } from "react";
+import { evaluate } from "mathjs";
 
 export default function App() {
-  const [input, setInput] = useState();
+  const [input, setInput] = useState("");
   const [result, setResult] = useState();
 
   const handleButtonPress = (buttonType) => {
@@ -17,7 +18,7 @@ export default function App() {
           setResult("");
           break;
         case "%":
-          setInput((prevInput) => prevInput + buttonType);
+          setInput((prevInput) => prevInput + "%");
           break;
         case "del":
           setInput((prevInput) => prevInput.slice(0, -1));
@@ -34,15 +35,19 @@ export default function App() {
         case "+":
           setInput((prevInput) => prevInput + buttonType);
           break;
-        case "00":
-          setInput((prevInput) => prevInput + "00");
+        case ".":
+          setInput((prevInput) => prevInput + ",");
           break;
         case "=":
           try {
             // Reemplaza los símbolos visuales con los operadores matemáticos
-            let expression = input.replace(/x/g, "*").replace(/÷/g, "/");
-            const evalResult = eval(expression);
-            setResult(evalResult.toString());
+            let expression = input
+              .replace(/x/g, "*")
+              .replace(/÷/g, "/")
+              .replace(/,/g, ".")
+              .replace(/%/g, "/100*");
+            const evalResult = evaluate(expression);
+            setResult(evalResult.toString().replace(/\./g, ","));
           } catch (e) {
             setResult("Error");
           }

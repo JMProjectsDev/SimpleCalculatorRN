@@ -120,7 +120,7 @@ export default function ButtonsPanel({ onButtonPress }) {
       id: "DotButton",
       image: require("../assets/dotButton.png"),
 
-      button: ",",
+      button: ".",
     },
     {
       id: "equalButton",
