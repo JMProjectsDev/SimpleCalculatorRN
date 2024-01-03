@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import ResultsPanel from "./components/ResultsPanel";
 import ButtonsPanel from "./components/ButtonsPanel";
 import { useState } from "react";
@@ -10,8 +10,13 @@ export default function App() {
   const [result, setResult] = useState();
 
   const handleButtonPress = (buttonType) => {
-    // Actualizar estado asincrónicamente
     setTimeout(() => {
+      let lastChar = input.slice(-1);
+      let isLastCharOperator = ["/", "*", "+", "-", "÷", "x", "%"].includes(
+        lastChar
+      );
+      let isButtonSymbol = ["+", "-", "*", "/", "%"].includes(buttonType);
+
       switch (buttonType) {
         case "del_all":
           setInput("");
@@ -24,36 +29,48 @@ export default function App() {
           setInput((prevInput) => prevInput.slice(0, -1));
           break;
         case "/":
-          setInput((prevInput) => prevInput + "÷");
+          if (input !== "" && !isLastCharOperator)
+            setInput((prevInput) => prevInput + "÷");
           break;
         case "*":
-          setInput((prevInput) => prevInput + "x");
+          if (input !== "" && !isLastCharOperator)
+            setInput((prevInput) => prevInput + "x");
           break;
         case "-":
-          setInput((prevInput) => prevInput + buttonType);
+          // Permite '-' si es el primer carácter o el último carácter es un operador
+          if (input === "" || lastChar !== "-") {
+            setInput((prevInput) => prevInput + buttonType);
+          }
           break;
         case "+":
-          setInput((prevInput) => prevInput + buttonType);
+          if (input !== "" && !isLastCharOperator) {
+            setInput((prevInput) => prevInput + buttonType);
+          }
           break;
         case ".":
-          setInput((prevInput) => prevInput + ",");
+          // Evita repetir ',' si el último carácter ya es ','
+          if (lastChar !== ",") setInput((prevInput) => prevInput + ",");
           break;
         case "=":
           try {
-            // Reemplaza los símbolos visuales con los operadores matemáticos
             let expression = input
               .replace(/x/g, "*")
               .replace(/÷/g, "/")
               .replace(/,/g, ".")
               .replace(/%/g, "/100*");
-            const evalResult = evaluate(expression);
-            setResult(evalResult.toString().replace(/\./g, ","));
+
+            if (input !== "") {
+              const evalResult = evaluate(expression);
+              setResult(evalResult.toString().replace(/\./g, ","));
+            }
           } catch (e) {
             setResult("Error");
           }
           break;
         default:
-          setInput((prevInput) => prevInput + buttonType);
+          if (!isButtonSymbol || !isLastCharOperator) {
+            setInput((prevInput) => prevInput + buttonType);
+          }
           break;
       }
     }, 0);
