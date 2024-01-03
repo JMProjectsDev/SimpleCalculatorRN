@@ -45,6 +45,6 @@ const styles = StyleSheet.create({
   result: {
     fontSize: 48,
     fontWeight: "500",
-    color: "#454545",
+    color: "#555555",
   },
 });
