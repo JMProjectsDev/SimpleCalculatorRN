@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import { LayoutAnimation, StyleSheet, View } from "react-native";
 import ResultsPanel from "./components/ResultsPanel";
 import ButtonsPanel from "./components/ButtonsPanel";
 import { useState } from "react";
@@ -9,12 +9,22 @@ export default function App() {
   const [input, setInput] = useState("");
   const [result, setResult] = useState();
 
+  // Nuevo estado para alternar las vistas
+  const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
+
   const handleButtonPress = (buttonType) => {
     setTimeout(() => {
       let lastChar = input.slice(-1);
-      let isLastCharOperator = ["/", "*", "+", "-", "÷", "x", "%"].includes(
-        lastChar
-      );
+      let isLastCharOperator = [
+        "/",
+        "*",
+        "+",
+        "-",
+        "÷",
+        "x",
+        "%",
+        ",",
+      ].includes(lastChar);
       let isButtonSymbol = ["+", "-", "*", "/", "%"].includes(buttonType);
 
       switch (buttonType) {
@@ -48,8 +58,13 @@ export default function App() {
           }
           break;
         case ".":
-          // Evita repetir ',' si el último carácter ya es ','
-          if (lastChar !== ",") setInput((prevInput) => prevInput + ",");
+          input === ""
+            ? setInput((prevInput) => prevInput + "0,")
+            : input !== "" && !isLastCharOperator
+            ? setInput((prevInput) => prevInput + ",")
+            : input !== "" && isLastCharOperator
+            ? setInput((prevInput) => prevInput)
+            : {};
           break;
         case "=":
           try {
@@ -67,6 +82,14 @@ export default function App() {
             setResult("Error");
           }
           break;
+        case "advOpt":
+          try {
+            handleAdvancedOptionsToggle();
+            //console.log("dentro del try")
+          } catch (error) {
+            console.log("Error");
+          }
+          break;
         default:
           if (!isButtonSymbol || !isLastCharOperator) {
             setInput((prevInput) => prevInput + buttonType);
@@ -76,10 +99,23 @@ export default function App() {
     }, 0);
   };
 
+  // Manejador para el botón de opciones avanzadas
+  const handleAdvancedOptionsToggle = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setShowAdvancedOptions(!showAdvancedOptions);
+    console.log("dentro de la funcion")
+  };
+
   return (
     <View style={styles.container}>
       <ResultsPanel input={input} result={result} />
-      <ButtonsPanel onButtonPress={handleButtonPress} />
+      <ButtonsPanel
+        onButtonPress={handleButtonPress}
+        showAdvancedOptions={showAdvancedOptions}
+        onAdvancedOptionsToggle={() =>
+          setShowAdvancedOptions(!showAdvancedOptions)
+        }
+      />
       <StatusBar style="auto" />
     </View>
   );
