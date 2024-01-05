@@ -14,6 +14,72 @@ export default function ButtonsPanel({
 }) {
   const operationButtons = [
     {
+      id: "sinButton",
+      image: require("../assets/sinButton.png"),
+      button: "log(",
+      advanced: true,
+    },
+    {
+      id: "cosButton",
+      image: require("../assets/cosButton.png"),
+      button: "ln(",
+      advanced: true,
+    },
+    {
+      id: "tagButton",
+      image: require("../assets/tanButton.png"),
+      button: "(",
+      advanced: true,
+    },
+    {
+      id: "radButton",
+      image: require("../assets/radButton.png"),
+      button: ")",
+      advanced: true,
+    },
+    {
+      id: "degButton",
+      image: require("../assets/degButton.png"),
+      button: "+-",
+      advanced: true,
+    },
+    {
+      id: "logButton",
+      image: require("../assets/logButton.png"),
+      button: "log(",
+      advanced: true,
+    },
+    {
+      id: "lnButton",
+      image: require("../assets/lnButton.png"),
+      button: "ln(",
+      advanced: true,
+    },
+    {
+      id: "pOButton",
+      image: require("../assets/pOButton.png"),
+      button: "(",
+      advanced: true,
+    },
+    {
+      id: "pCButton",
+      image: require("../assets/pCButton.png"),
+      button: ")",
+      advanced: true,
+    },
+    {
+      id: "plus_minusButton",
+      image: require("../assets/plus_minusButton.png"),
+      button: "+-",
+      advanced: true,
+    },
+    {
+      id: "factorialButton",
+      image: require("../assets/factorialButton.png"),
+      button: "!",
+      advanced: true,
+    },
+    {
       id: "cButton",
       image: require("../assets/cButton.png"),
       button: "del_all",
@@ -36,6 +102,12 @@ export default function ButtonsPanel({
       image: require("../assets/divButton.png"),
       button: "/",
       advanced: false,
+    },
+    {
+      id: "powerButton",
+      image: require("../assets/powerButton.png"),
+      button: "^",
+      advanced: true,
     },
     {
       id: "_7Button",
@@ -62,6 +134,12 @@ export default function ButtonsPanel({
       advanced: false,
     },
     {
+      id: "squareRootButton",
+      image: require("../assets/squareButton.png"),
+      button: "√",
+      advanced: true,
+    },
+    {
       id: "_4Button",
       image: require("../assets/_4Button.png"),
       button: 4,
@@ -86,6 +164,12 @@ export default function ButtonsPanel({
       advanced: false,
     },
     {
+      id: "piButton",
+      image: require("../assets/piButton.png"),
+      button: 3.1415926535897,
+      advanced: true,
+    },
+    {
       id: "_1Button",
       image: require("../assets/_1Button.png"),
       button: 1,
@@ -108,6 +192,12 @@ export default function ButtonsPanel({
       image: require("../assets/plusButton.png"),
       button: "+",
       advanced: false,
+    },
+    {
+      id: "eButton",
+      image: require("../assets/eButton.png"),
+      button: 2.718281828459,
+      advanced: true,
     },
     {
       id: "advOptButton",
@@ -220,7 +310,7 @@ const styles = StyleSheet.create({
   buttonShadow: {
     width: 75,
     height: 75,
-    marginVertical: 6,
+    marginVertical: 3,
     marginHorizontal: 5,
     justifyContent: "center",
     alignItems: "center",
@@ -234,8 +324,8 @@ const styles = StyleSheet.create({
   // Estilos adicionales para botones avanzados y su visibilidad
   advancedButton: {
     // Estilos cuando las opciones avanzadas están activas
-    width: 50, // Un ejemplo, ajusta según tus necesidades
-    height: 50, // Un ejemplo, ajusta según tus necesidades
+    width: 60, // Un ejemplo, ajusta según tus necesidades
+    height: 60, // Un ejemplo, ajusta según tus necesidades
     // ... Otros estilos que quieras aplicar a los botones avanzados
   },
   hiddenButton: {
@@ -244,5 +334,9 @@ const styles = StyleSheet.create({
     height: 0,
     opacity: 0,
     transform: [{ scale: 0 }],
+  },
+  shrinkButton: {
+    width: 60,
+    height: 60,
   },
 });
